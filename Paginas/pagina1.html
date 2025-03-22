@@ -111,12 +111,12 @@
 <body>
     
     <div class="images-container">
-        <img src="/Imagenes/DAZN1.jpg" class="image" onclick="openModal(1)">
-        <img src="/Imagenes/DAZN2.jpg" class="image" onclick="openModal(2)">
-        <img src="/Imagenes/DAZN3.jpg" class="image" onclick="openModal(3)">
-        <img src="/Imagenes/DAZN4.jpg" class="image" onclick="openModal(4)">
-        <img src="/Imagenes/DAZNF1.jpg" class="image" onclick="openModal(5)">
-        <img src="/Imagenes/DAZN LaLiga.png" class="image" onclick="openModal(6)">
+        <img src="../Imagenes/DAZN1.jpg" class="image" onclick="openModal(1)">
+        <img src="../Imagenes/DAZN2.jpg" class="image" onclick="openModal(2)">
+        <img src="../Imagenes/DAZN3.jpg" class="image" onclick="openModal(3)">
+        <img src="../Imagenes/DAZN4.jpg" class="image" onclick="openModal(4)">
+        <img src="../Imagenes/DAZNF1.jpg" class="image" onclick="openModal(5)">
+        <img src="../Imagenes/DAZN LaLiga.png" class="image" onclick="openModal(6)">
     </div>
 
     <div style="text-align: center; margin-top: 20px;">
@@ -125,7 +125,7 @@
     
     <div class="overlay" id="overlay">
         <div class="modal">
-            <img src="/Imagenes/X.png" class="close" onclick="closeModal()">
+            <img src="../Imagenes/X.png" class="close" onclick="closeModal()">
             <div id="buttons-container"></div>
         </div>
     </div>
@@ -217,7 +217,7 @@
 
             // Crea la imagen de carga
             const loadingImage = document.createElement('img');
-            loadingImage.src = '/Imagenes/Cargando.gif';
+            loadingImage.src = '../Imagenes/Cargando.gif';
             loadingImage.alt = 'Cargando...';
             loadingImage.style.width = '100px'; // Ajusta el tamaño de la imagen
             loadingImage.style.height = '100px';
