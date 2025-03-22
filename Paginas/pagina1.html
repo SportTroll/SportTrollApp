@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina1</title>
+    <style>
+        body {
+            margin-top: 15vh; /* Escala según la altura de la pantalla */
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #DAD6A4;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: white;
+            padding: 3.5vh; /* Espaciado interno */
+            border-radius: 1vh; /* Bordes redondeados */
+            position: relative;
+            text-align: center;
+            width: 50%; /* Escala según el ancho de la pantalla */
+            max-width: 45vh; /* Ancho máximo */
+            max-height: 80vh; /* Altura máxima para evitar desbordamiento */
+            overflow-y: auto; /* Habilita el scroll si hay muchas opciones */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para mejor visibilidad */
+        }
+
+        .close {
+            position: absolute;
+            top: 1vh; /* Margen superior */
+            right: 1vh; /* Margen derecho */
+            width: 2vh; /* Tamaño del botón */
+            height: 2vh; /* Tamaño del botón */
+            cursor: pointer;
+        }
+
+        .button {
+            background: blue;
+            color: white;
+            padding: 2vh; /* Escala según la altura de la pantalla */
+            margin: 0.5vh 0; /* Espaciado entre botones */
+            border: none;
+            border-radius: 1vh; /* Bordes redondeados */
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            max-width: 90%; /* Limita el ancho del botón */
+            text-align: center;
+        }
+
+        .images-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Mantén dos columnas */
+            gap: 2vh; /* Espaciado entre imágenes */
+            justify-content: center; /* Centra las columnas horizontalmente */
+            align-items: center; /* Centra las imágenes verticalmente */
+            max-width: 100%; /* Escala según el ancho de la pantalla */
+            margin: auto; /* Centra el contenedor en la página */
+            padding: 0 5vw; /* Añade espaciado interno a los lados */
+        }
+
+        .image {
+            width: 153px; /* Ancho fijo */
+            height: 135px; /* Alto fijo */
+            cursor: pointer;
+            border-radius: 2vh; /* Bordes redondeados */
+            object-fit: cover; /* Recorta la imagen para llenar el contenedor */
+            justify-self: center; /* Centra cada imagen dentro de su celda */
+        }
+
+        #buttons-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1vh; /* Espaciado entre botones */
+            margin-top: 4vh; /* Espacio entre el botón "X" y las opciones */
+        }
+
+        .next-button {
+            display: inline-block;
+            background-color: #82B84D;
+            color: #FFFFFF;
+            padding: 1.5vh 3vw; /* Ajusta el tamaño del botón */
+            text-decoration: none;
+            border-radius: 2vh; /* Escala proporcionalmente */
+            font-size: 2vh; /* Escala según la altura de la pantalla */
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            margin-top: 8vh; /* Escala proporcionalmente */
+        }
+
+        .next-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="images-container">
+        <img src="../Imagenes/DAZN1.jpg" class="image" onclick="openModal(1)">
+        <img src="../Imagenes/DAZN2.jpg" class="image" onclick="openModal(2)">
+        <img src="../Imagenes/DAZN3.jpg" class="image" onclick="openModal(3)">
+        <img src="../Imagenes/DAZN4.jpg" class="image" onclick="openModal(4)">
+        <img src="../Imagenes/DAZNF1.jpg" class="image" onclick="openModal(5)">
+        <img src="../Imagenes/DAZN LaLiga.png" class="image" onclick="openModal(6)">
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="pagina2.html" class="next-button">Siguiente</a>
+    </div>
+    
+    <div class="overlay" id="overlay">
+        <div class="modal">
+            <img src="../Imagenes/X.png" class="close" onclick="closeModal()">
+            <div id="buttons-container"></div>
+        </div>
+    </div>
+    
+    <script>
+        const opciones = {
+            1: [
+                { texto: "Opción 1 (1080p)", enlace: "acestream://e6a00cb2912609dceeeee88d3f66a2de9718b421" },
+                { texto: "Opción 2 (1080p)", enlace: "acestream://a7e083d922be14a0496d65aad2ff8ea9c8011bd0" },
+                { texto: "Opción 3 (1080p)", enlace: "acestream://d5446f3cc8e42ba965fd9f1c73b1e2ac3921a6ab" },
+                { texto: "Opción 4 (1080p)", enlace: "acestream://71a65780b9c542a8c9e4084ae5aefdd9286da51e" },
+                { texto: "Opción 5 (1080p)", enlace: "acestream://35c7f0c966ecde3390f4510bb4caded40018c07a" },
+                { texto: "Opción 6 (1080p)", enlace: "acestream://d5b2c6b940cf3df5e8f9dc6f000f0ea23a10b151" }
+            ],
+            2: [
+                { texto: "Opción 1 (1080p)", enlace: "acestream://ddb69a119ab5faf7eeec3cef77e3d591a8242816" },
+                { texto: "Opción 2 (1080p)", enlace: "acestream://57e38ef7eaab5596559415bdf96926ee4115c5ce" },
+                { texto: "Opción 3 (1080p)", enlace: "acestream://ca923c9873fd206a41c1e83ff8fc40e3cf323c9a" },
+                { texto: "Opción 3 (1080p)", enlace: "acestream://a929eeec1268d69d1556a2e3ace793b2577d8810" },
+                { texto: "Opción 3 (1080p)", enlace: "acestream://b0eabe0fdd02fdd165896236765a9b753a2ff516" }
+            ],
+            3: [
+                { texto: "Opción 1 (1080p)", enlace: "acestream://c34a6552886fad4627ea36947fdec3e46e4e3b08" },
+                { texto: "Opción 2 (1080p)", enlace: "acestream://5c7406bfaf65cc32d3f52b1430b53a37bc4c59bc" },
+                { texto: "Opción 3 (1080p)", enlace: "acestream://d1d9ec2361a6ac8edc0b2841866383768cc28df9" }
+            ],
+            4: [
+                { texto: "Opción 1 (1080p)", enlace: "acestream://5e5b670d44e4f23a49ebe1770458066ac2cf58e3" },
+                { texto: "Opción 2 (1080p)", enlace: "acestream://b4b48a6028aa05ca32f583d3019dc2e3e6bd9988" },
+                { texto: "Opción 3 (1080p)", enlace: "acestream://7e90956539f4e1318a63f3960e4f75c7c7c5a3b8" }
+            ],
+            5: [
+                { texto: "Opción 1 (1080p)", enlace: "acestream://9f04b67904bf5ec6782ab34e8105bca264c10b62" },
+                { texto: "Opción 2 (1080p)", enlace: "acestream://4f1d222c600e66ef4990b3d7ea13bfa53f7bfea1" },
+                { texto: "Opción 3 (1080p)", enlace: "acestream://5d8613b5fde87f366bb5e41ac8011007a4c6bd3c" },
+                { texto: "Opción 4 (1080p)", enlace: "acestream://751aa1f2429dfb9484b67a3ede00d859c6212994" },
+                { texto: "Opción 5 (1080p)", enlace: "acestream://d6281d4e6310269b416180442a470d23a4a99dc9" },
+                { texto: "Opción 6 (1080p)", enlace: "acestream://2c6e4c897661e6b0257bfe931b66d20b2ec763b6" },
+                { texto: "Opción 7 (1080p)", enlace: "acestream://71eef80158aa8b37f3dc59f6793c6696df9a2dfa" },
+                { texto: "Opción 8 (720p)", enlace: "acestream://268289e7a3c5209960b53b4d43c8c65fab294b85" }
+            ],
+            6: [
+                { texto: "Opción 1 (1080p)", enlace: "acestream://110d441ddc9713a7452588770d2bc85504672f47" },
+                { texto: "Opción 2 (1080p)", enlace: "acestream://ec29289b0b14756e686c03a501bae1efa05be70c" },
+                { texto: "Opción 3 (1080p)", enlace: "acestream://6de4794cd02f88f14354b5996823413a59a1de0f" },
+                { texto: "Opción 4 (720p)", enlace: "acestream://8c8c1e047a1c5ed213ba74722a5345dc55c3c0eb" }
+            ]
+        };
+
+        function openModal(imageId) {
+            const buttonsContainer = document.getElementById('buttons-container');
+            buttonsContainer.innerHTML = ""; // Limpia las opciones previas
+
+            // Genera los botones dinámicamente según las opciones
+            opciones[imageId].forEach(opcion => {
+                const button = document.createElement("button");
+                button.className = "button";
+                button.textContent = opcion.texto;
+                button.onclick = () => handleOptionClick(opcion.enlace);
+                buttonsContainer.appendChild(button);
+            });
+
+            // Ajusta dinámicamente la altura del modal según el contenido
+            const modal = document.querySelector('.modal');
+            modal.style.height = 'auto'; // Permite que el modal se ajuste automáticamente
+            modal.style.maxHeight = '80vh'; // Limita la altura máxima
+
+            // Muestra el modal
+            document.getElementById('overlay').style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('overlay').style.display = 'none';
+        }
+        
+        function handleOptionClick(url) {
+            // Cierra la ventana de las opciones inmediatamente
+            closeModal();
+
+            // Abre el enlace (esto abrirá la ventana de la app)
+            window.location.href = url;
+
+            // Muestra la ventana de carga después de abrir el enlace
+            setTimeout(() => {
+                showLoadingScreen();
+
+                // Espera 5 segundos y luego cierra la ventana de carga
+                setTimeout(() => {
+                    closeLoadingScreen();
+                }, 5000);
+            }, 500); // Retraso breve para asegurarse de que el enlace se abre primero
+        }
+
+        function showLoadingScreen() {
+            // Crea un overlay para la ventana de carga
+            const loadingOverlay = document.createElement('div');
+            loadingOverlay.id = 'loading-overlay';
+            loadingOverlay.style.position = 'fixed';
+            loadingOverlay.style.top = '0';
+            loadingOverlay.style.left = '0';
+            loadingOverlay.style.width = '100%';
+            loadingOverlay.style.height = '100%';
+            loadingOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            loadingOverlay.style.display = 'flex';
+            loadingOverlay.style.justifyContent = 'center';
+            loadingOverlay.style.alignItems = 'center';
+            loadingOverlay.style.zIndex = '1000';
+
+            // Crea la imagen de carga
+            const loadingImage = document.createElement('img');
+            loadingImage.src = '../Imagenes/Cargando.gif';
+            loadingImage.alt = 'Cargando...';
+            loadingImage.style.width = '100px'; // Ajusta el tamaño de la imagen
+            loadingImage.style.height = '100px';
+
+            // Añade la imagen al overlay
+            loadingOverlay.appendChild(loadingImage);
+
+            // Añade el overlay al body
+            document.body.appendChild(loadingOverlay);
+        }
+
+        function closeLoadingScreen() {
+            // Elimina el overlay de carga
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                document.body.removeChild(loadingOverlay);
+            }
+        }
+    </script>
+</body>
+</html>
