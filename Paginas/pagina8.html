@@ -188,8 +188,8 @@
             // Cierra la ventana de las opciones inmediatamente
             closeModal();
 
-            // Abre el enlace (esto abrirá la ventana de la app)
-            window.location.href = url;
+            // Abre el enlace en una nueva pestaña
+            window.open(url, '_blank');
 
             // Muestra la ventana de carga después de abrir el enlace
             setTimeout(() => {
